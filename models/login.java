@@ -6,32 +6,35 @@ public class login {
     {
         Scanner sc = new Scanner(System.in);
         System.out.printf("""
-            ==================================================
-                            VitalClinic System%n          
-                Username:%n
-                Password:%n
-            =================================================
+        ==================================================
+                        VitalClinic System%n          
+            Username:%n
+            Password:%n
+        ================================================== %n%nUsername: 
         """);
 
         String user = sc.nextLine();
 
         System.out.printf("""
-            ==================================================
+          %n==================================================
                         VitalClinic System%n   
-                Username: %s%n
-                Password:%n
-            =================================================
-                """, user);
+            Username: %s%n
+            Password:%n
+        ================================================== %n%nPassword
+        """, user);
+
         String password = sc.nextLine();
 
         System.out.printf("""
-            ==================================================
-                        VitalClinic System%n   
-                Username: %s%n
-                Password: %s%n
-            =================================================
-                """, user, password);
+          %n==================================================
+                        VitalClinic System 
 
-        sc.close();
+                        Login Successful!%n
+                        Welcome %s
+                
+        ==================================================
+        """, user, password);
+
+        
     }
 }
