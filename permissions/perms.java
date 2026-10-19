@@ -4,8 +4,8 @@ import java.util.*;
 // All the permmissions will go here
 // Will distribute the permissions to the different users
 // admin perms - will have all the perms
-// doctor perms - will have patient records and appointments
-// member perms - will have patient records
+// doctor perms - view own profile, view assigned patients, view appointments 
+// member perms - View own doctor profile, view own records, book, view, cancel own appointments, view own medical records, view billing and payments
 
 public class perms {
     public static void patient_records() {
@@ -24,7 +24,7 @@ public class perms {
                 [1] Create Doctor Record
                 [2] View Doctor Record
                 [3] Edit Doctor Record
-                [4] delete Doctor Record
+                [4] Delete Doctor Record
                 [0] Exit%n
             ==================================================
         %n: """);
@@ -66,12 +66,10 @@ public class perms {
         // admin can search medical records
         // admin can delete medical records
     }
-
     public static void billing_payments (){
         // admin can view billing and payments
         // admin can add billing and payments
         // admin can search billing and payments
         // adming can delete billing and payments
     }
-
 }
