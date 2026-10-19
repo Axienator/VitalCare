@@ -3,8 +3,6 @@ import java.util.*;
 import java.io.*;
 public class doctor_service {
   
-    // Admin can delete doctor records
-
     public static void delete_doctor(){
         ArrayList<String> doctors = new ArrayList<>();
         Scanner sc = new Scanner(System.in);
