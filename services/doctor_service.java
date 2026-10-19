@@ -3,9 +3,10 @@ import java.util.*;
 import java.io.*;
 public class doctor_service {
   
+    static Scanner sc = new Scanner(System.in);
+
     public static void delete_doctor(){
         ArrayList<String> doctors = new ArrayList<>();
-        Scanner sc = new Scanner(System.in);
         
         System.out.println("Enter Doctor ID: ");
         String search_id = sc.nextLine().trim();
@@ -47,7 +48,6 @@ public class doctor_service {
             for(int i = 0; i < doctors.size(); i++){
 
                 bw.write(doctors.get(i) + "\n");
-                bw.newLine();
             }
             
             System.out.println("Doctor deleted successfully!");
@@ -60,7 +60,7 @@ public class doctor_service {
     }
     public static void edit_doctor(){
         ArrayList<String> doctors = new ArrayList<>();
-        Scanner sc = new Scanner(System.in);
+        
         System.out.println("Enter Doctor ID: ");
         String search_id = sc.nextLine().trim();
 
@@ -91,7 +91,7 @@ public class doctor_service {
                     doctor[2] = sc.nextLine().trim();
                     System.out.println("Enter new Doctor Phone Number: ");
                     doctor[3] = sc.nextLine().trim();
-                    bw.write(doctor[0] + "," + doctor[1] + "," + doctor[2] + "," + doctor[3] + "\n");
+                    bw.write(doctor[0] + "," + doctor[1] + "," + doctor[2] + "," + doctor[3]);
                 } else {
                     bw.write(doctors.get(i) + "\n");
                     found = true;
@@ -110,7 +110,6 @@ public class doctor_service {
         }
     }
     public static void view_doctor(){
-        Scanner sc = new Scanner(System.in);
 
         System.out.print("Enter Doctor ID: ");
         String search_id = sc.nextLine().trim();
@@ -148,7 +147,7 @@ public class doctor_service {
     }
     public static void create_doctor() {
         try (BufferedWriter bw = new BufferedWriter(new FileWriter("doctors.txt", true))) {
-            Scanner sc = new Scanner(System.in);
+           
 
             System.out.print("Enter Doctor ID: ");
             String id = sc.nextLine().trim();
@@ -163,7 +162,7 @@ public class doctor_service {
             String phone = sc.nextLine();
 
             bw.write(id + ", " + name + ", " + specialization + ", " + phone);
-            bw.newLine();
+            
 
             System.out.println("Doctor created successfully!");
             sc.close();
