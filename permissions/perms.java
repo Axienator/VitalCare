@@ -8,6 +8,9 @@ import java.util.*;
 // member perms - View own doctor profile, view own records, book, view, cancel own appointments, view own medical records, view billing and payments
 
 public class perms {
+
+    static Scanner sc = new Scanner(System.in);
+
     public static void patient_records() {
         // Admin can view patient records
         // Admin can add patient records
@@ -17,7 +20,6 @@ public class perms {
         
     }
     public static void doctor_management() {
-        Scanner sc = new Scanner(System.in);
 
         System.out.printf("""
             ==================================================%n
@@ -70,6 +72,43 @@ public class perms {
         // admin can view billing and payments
         // admin can add billing and payments
         // admin can search billing and payments
-        // adming can delete billing and payments
+        // admin can delete billing and payments
+    }
+
+    public static void choices() {
+        System.out.printf("""
+            ==================================================
+                    VitalClinic System%n
+                [1] Patient records
+                [2] Doctor Management
+                [3] Appointments
+                [4] Medical Records
+                [5] Billing and Payments
+                [0] Exit%n
+            ==================================================
+        %n: """);
+        int choice = sc.nextInt();
+        switch(choice) {
+            case 1:
+                patient_records();
+                break;
+            case 2:
+                doctor_management();
+                break;
+            case 3:
+                appointments();
+                break;
+            case 4:
+                medical_records();
+                break;
+            case 5:
+                billing_payments();
+                break;
+            case 0:
+                System.out.println("Thank you for using the system!");
+                break;
+            default:
+                System.out.println("Invalid Choice, try again");
+        }
     }
 }
