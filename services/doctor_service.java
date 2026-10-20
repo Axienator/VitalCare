@@ -92,9 +92,9 @@ public class doctor_service {
                     System.out.println("Enter new Doctor Phone Number: ");
                     doctor[3] = sc.nextLine().trim();
                     bw.write(doctor[0] + "," + doctor[1] + "," + doctor[2] + "," + doctor[3]);
+                    found = true;
                 } else {
                     bw.write(doctors.get(i) + "\n");
-                    found = true;
                 }
             }
 
