@@ -1,13 +1,12 @@
 // Admin options
 
 package roles;
-import permissions.perms;
-import permissions.perms.*;
 import java.util.*;
+import permissions.perms;
 
 public class admin {
 
-    public static void main(String[] args) {
+    public static void main(String[] args, String doctorID) {
         Scanner sc = new Scanner(System.in);
         int choice;
         System.out.printf("""
@@ -25,26 +24,34 @@ public class admin {
         choice = sc.nextInt();
 
         switch (choice) {
-            case 1:
+            case 1 -> {
                 System.out.println("Patient records");
                 break;
-            case 2:
+            }
+            case 2 -> {
                 perms.doctor_management();
                 break;
-            case 3:
-                System.out.println("Appointments");
+            }
+            case 3 -> {
+                perms.appointments(doctorID);
                 break;
-            case 4:
+            }
+            case 4 -> {
                 System.out.println("Medical Records");
                 break;
-            case 5:
+            }
+            case 5 -> {
                 System.out.println("Billing and Payments");
                 break;
-            case 0:
+            }
+            case 0 -> {
                 System.out.println("Thank you for using the system!");
                 break;
-            default:
+            }
+            default -> {
                 System.out.println("Invalid Choice, try again");
+                break;
+            }
         }
     }
 }
