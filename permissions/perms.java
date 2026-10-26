@@ -1,114 +1,139 @@
+
 package permissions;
-import services.*;
+
 import java.util.*;
-// All the permmissions will go here
-// Will distribute the permissions to the different users
-// admin perms - will have all the perms
-// doctor perms - view own profile, view assigned patients, view appointments 
-// member perms - View own doctor profile, view own records, book, view, cancel own appointments, view own medical records, view billing and payments
+import services.*;
 
 public class perms {
 
     static Scanner sc = new Scanner(System.in);
 
     public static void patient_records() {
-        // Admin can view patient records
-        // Admin can add patient records
-        // Admin can edit patient records
-        // Admin can delete patient records
-        // Admin can search patient records
-        
-    }
-    public static void doctor_management() {
-
         System.out.printf("""
-            ==================================================%n
+            ==================================================
+                [1] Create Patient Record
+                [2] View Patient Record
+                [3] Edit Patient Record
+                [4] Delete Patient Record
+                [0] Back
+            ==================================================
+            Enter choice: """);
+
+        int choice = sc.nextInt();
+        sc.nextLine();
+
+        switch (choice) {
+            case 1 -> patient_service.add_patient();
+            case 2 -> patient_service.view_patient();
+            case 3 -> patient_service.edit_patient();
+            case 4 -> patient_service.delete_patient();
+            case 0 -> {
+                System.out.println("Returning to menu...");
+            }
+            default -> System.out.println("Invalid choice, try again.");
+        }
+    }
+
+    public static void doctor_management() {
+        System.out.printf("""
+            ==================================================
                 [1] Create Doctor Record
                 [2] View Doctor Record
                 [3] Edit Doctor Record
                 [4] Delete Doctor Record
-                [0] Exit%n
+                [0] Back
             ==================================================
-        %n: """);
+            Enter choice: """);
 
         int choice = sc.nextInt();
-        switch (choice){
-            case 1:
-                doctor_service.create_doctor();
-                break;
-            case 2:
-                doctor_service.view_doctor();
-                break;
-            case 3:
-                doctor_service.edit_doctor();
-                break;
-            case 4:
-                doctor_service.delete_doctor();
-                break;
-            case 0:
-                System.out.println("Thank you for using the system!");
-                break;
-            default:
-                System.out.println("Invalid Choice, try again");
+        sc.nextLine();
+
+        switch (choice) {
+            case 1 -> doctor_service.create_doctor();
+            case 2 -> doctor_service.view_doctor();
+            case 3 -> doctor_service.edit_doctor();
+            case 4 -> doctor_service.delete_doctor();
+            case 0 -> System.out.println("Returning to menu...");
+            default -> System.out.println("Invalid choice, try again.");
         }
-        sc.close();
-    }
-    public static void appointments() {
-        // Admin can view appointments
-        // Admin can add appointments and select doctor availability
-        // If admin chooses the doctor, admin can view the doctor's schedule
-        // If admin picked the doctor that is not available, admin can choose another doctor
-        // Admin can cancel appointments
-        // Admin can delete appointments
-        // Admin can search appointments
-    }
-    public static void medical_records() {
-        // admin can view medical records
-        // admin can add medical records
-        // admin can search medical records
-        // admin can delete medical records
-    }
-    public static void billing_payments (){
-        // admin can view billing and payments
-        // admin can add billing and payments
-        // admin can search billing and payments
-        // admin can delete billing and payments
     }
 
-    public static void choices() {
+    public static void appointments(String doctorID) {
         System.out.printf("""
             ==================================================
-                    VitalClinic System%n
-                [1] Patient records
+                [1] Add Appointment
+                [2] View Appointment
+                [3] Edit Appointment
+                [4] Delete Appointment
+                [0] Back
+            ==================================================
+            Enter choice: """);
+
+        int choice = sc.nextInt();
+        sc.nextLine();
+
+        switch (choice) {
+            case 1 -> appointment_service.add_appointment();
+            case 2 -> appointment_service.view_appointment(doctorID);
+            case 3 -> appointment_service.edit_appointment();
+            case 4 -> appointment_service.delete_appointment();
+            case 0 -> System.out.println("Returning to menu...");
+            default -> System.out.println("Invalid choice, try again.");
+        }
+    }
+
+    public static void medical_records() {
+        System.out.printf("""
+            ==================================================
+                [1] Add Medical Record
+                [2] View Medical Record
+                [3] Edit Medical Record
+                [4] Delete Medical Record
+                [0] Back
+            ==================================================
+            Enter choice: """);
+
+        int choice = sc.nextInt();
+        sc.nextLine();
+
+        switch (choice) {
+            case 1 -> medical_service.add_medical();
+            case 2 -> medical_service.view_medical();
+            case 3 -> medical_service.edit_medical();
+            case 4 -> medical_service.delete_medical();
+            case 0 -> System.out.println("Returning to menu...");
+            default -> System.out.println("Invalid choice, try again.");
+        }
+    }
+
+    public static void billing_payments() {
+        // Add billing and payment functions here
+    }
+
+    public static void choices(String doctorID) {
+        System.out.printf("""
+            ==================================================
+                    VitalClinic System
+                [1] Patient Records
                 [2] Doctor Management
                 [3] Appointments
                 [4] Medical Records
                 [5] Billing and Payments
-                [0] Exit%n
+                [0] Back
             ==================================================
-        %n: """);
+            Enter choice: """);
+
         int choice = sc.nextInt();
-        switch(choice) {
-            case 1:
-                patient_records();
-                break;
-            case 2:
-                doctor_management();
-                break;
-            case 3:
-                appointments();
-                break;
-            case 4:
-                medical_records();
-                break;
-            case 5:
-                billing_payments();
-                break;
-            case 0:
-                System.out.println("Thank you for using the system!");
-                break;
-            default:
-                System.out.println("Invalid Choice, try again");
+        sc.nextLine();
+
+        switch (choice) {
+            case 1 -> patient_records();
+            case 2 -> doctor_management();
+            case 3 -> appointments(doctorID);
+            case 4 -> medical_records();
+            case 5 -> billing_payments();
+            case 0 -> System.out.println("Thank you for using the system!");
+            default -> System.out.println("Invalid choice, try again.");
         }
     }
 }
