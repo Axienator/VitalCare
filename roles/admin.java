@@ -7,7 +7,6 @@ import permissions.perms;
 public class admin {
 
     public static void main(String[] args, String doctorID) {
-        Scanner sc = new Scanner(System.in);
         int choice;
         System.out.printf("""
             ==================================================
@@ -21,7 +20,9 @@ public class admin {
             ==================================================
         %n: """);
 
-        choice = sc.nextInt();
+        try (Scanner sc = new Scanner(System.in)) {
+            choice = sc.nextInt();
+        }
 
         switch (choice) {
             case 1 -> {
@@ -37,11 +38,11 @@ public class admin {
                 break;
             }
             case 4 -> {
-                System.out.println("Medical Records");
+                perms.medical_records();
                 break;
             }
             case 5 -> {
-                System.out.println("Billing and Payments");
+                perms.billing_payments();
                 break;
             }
             case 0 -> {
