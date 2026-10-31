@@ -6,16 +6,18 @@ public class clinic {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         int choice;
-       
+
         System.out.printf("""
             ==================================================
                     VitalClinic System%n
                 [1] Log in as Admin
                 [2] Log in as Staff
                 [3] Log in as Member
+                [4] Register as Member
+                [5] Register Staff (Admin only)
                 [0] Exit%n
             ==================================================
-        %n: """);
+        %n:\s""");
 
         if (sc.hasNextInt()) {
             choice = sc.nextInt();
@@ -35,6 +37,12 @@ public class clinic {
             }
             case 3 -> {
                 login.member_login_menu();
+            }
+            case 4 -> {
+                login.member_register(sc);
+            }
+            case 5 -> {
+                login.staff_register(sc);
             }
             case 0 -> {
                 System.out.println("Thank you for using the system!");
