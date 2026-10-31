@@ -1,4 +1,3 @@
-
 package permissions;
 
 import java.util.*;
@@ -7,6 +6,17 @@ import services.*;
 public class perms {
 
     static Scanner sc = new Scanner(System.in);
+
+    // Reads a menu choice; returns -1 for non-numeric input instead of crashing
+    private static int readChoice() {
+        if (sc.hasNextInt()) {
+            int choice = sc.nextInt();
+            sc.nextLine();
+            return choice;
+        }
+        sc.nextLine();
+        return -1;
+    }
 
     public static void patient_records() {
         System.out.printf("""
@@ -17,10 +27,9 @@ public class perms {
                 [4] Delete Patient Record
                 [0] Back
             ==================================================
-            Enter choice: """);
+            Enter choice:\s""");
 
-        int choice = sc.nextInt();
-        sc.nextLine();
+        int choice = readChoice();
 
         switch (choice) {
             case 1 -> patient_service.add_patient();
@@ -43,10 +52,9 @@ public class perms {
                 [4] Delete Doctor Record
                 [0] Back
             ==================================================
-            Enter choice: """);
+            Enter choice:\s""");
 
-        int choice = sc.nextInt();
-        sc.nextLine();
+        int choice = readChoice();
 
         switch (choice) {
             case 1 -> doctor_service.create_doctor();
@@ -67,10 +75,9 @@ public class perms {
                 [4] Delete Appointment
                 [0] Back
             ==================================================
-            Enter choice: """);
+            Enter choice:\s""");
 
-        int choice = sc.nextInt();
-        sc.nextLine();
+        int choice = readChoice();
 
         switch (choice) {
             case 1 -> appointment_service.add_appointment();
@@ -82,31 +89,31 @@ public class perms {
         }
     }
 
-    public static void medical_records() {
+   public static void medical_records() {
         System.out.printf("""
             ==================================================
-                [1] Add Medical Record
-                [2] View Medical Record
-                [3] Edit Medical Record
-                [4] Delete Medical Record
+                    VitalClinic System
+                [1] Add medical records
+                [2] View medical records
+                [3] Edit medical records
+                [4] Delete medical records
                 [0] Back
             ==================================================
-            Enter choice: """);
+            Enter choice:\s""");
 
-        int choice = sc.nextInt();
-        sc.nextLine();
+        int choice = readChoice();
 
         switch (choice) {
-            case 1 -> medical_service.add_medical();
-            case 2 -> medical_service.view_medical();
-            case 3 -> medical_service.edit_medical();
-            case 4 -> medical_service.delete_medical();
+            case 1 -> medical_service.addMedicalRecord();
+            case 2 -> medical_service.viewMedicalRecord();
+            case 3 -> medical_service.editMedicalRecord();
+            case 4 -> medical_service.deleteMedicalRecord();
             case 0 -> System.out.println("Returning to menu...");
             default -> System.out.println("Invalid choice, try again.");
         }
     }
 
-    public static void billing_payments() {
+   public static void billing_payments() {
         System.out.printf("""
             ==================================================
                     VitalClinic System
@@ -116,10 +123,9 @@ public class perms {
                 [4] Delete Billing records
                 [0] Back
             ==================================================
-            Enter choice: """);
+            Enter choice:\s""");
 
-        int choice = sc.nextInt();
-        sc.nextLine();
+        int choice = readChoice();
 
         switch (choice) {
             case 1 -> billing_service.add_billing();
@@ -132,29 +138,33 @@ public class perms {
     }
 
     public static void choices(String doctorID) {
-        System.out.printf("""
-            ==================================================
-                    VitalClinic System
-                [1] Patient Records
-                [2] Doctor Management
-                [3] Appointments
-                [4] Medical Records
-                [5] Billing and Payments
-                [0] Back
-            ==================================================
-            Enter choice: """);
+        while (true) {
+            System.out.printf("""
+                ==================================================
+                        VitalClinic System
+                    [1] Patient Records
+                    [2] Doctor Management
+                    [3] Appointments
+                    [4] Medical Records
+                    [5] Billing and Payments
+                    [0] Back
+                ==================================================
+                Enter choice:\s""");
 
-        int choice = sc.nextInt();
-        sc.nextLine();
+            int choice = readChoice();
 
-        switch (choice) {
-            case 1 -> patient_records();
-            case 2 -> doctor_management();
-            case 3 -> appointments(doctorID);
-            case 4 -> medical_records();
-            case 5 -> billing_payments();
-            case 0 -> System.out.println("Thank you for using the system!");
-            default -> System.out.println("Invalid choice, try again.");
+            switch (choice) {
+                case 1 -> patient_records();
+                case 2 -> doctor_management();
+                case 3 -> appointments(doctorID);
+                case 4 -> medical_records();
+                case 5 -> billing_payments();
+                case 0 -> {
+                    System.out.println("Thank you for using the system!");
+                    return;
+                }
+                default -> System.out.println("Invalid choice, try again.");
+            }
         }
     }
 }
