@@ -107,7 +107,28 @@ public class perms {
     }
 
     public static void billing_payments() {
-        // Add billing and payment functions here
+        System.out.printf("""
+            ==================================================
+                    VitalClinic System
+                [1] Add Billing records
+                [2] View Billing records
+                [3] Edit Billing records
+                [4] Delete Billing records
+                [0] Back
+            ==================================================
+            Enter choice: """);
+
+        int choice = sc.nextInt();
+        sc.nextLine();
+
+        switch (choice) {
+            case 1 -> billing_service.add_billing();
+            case 2 -> billing_service.view_billing();
+            case 3 -> billing_service.edit_billing();
+            case 4 -> billing_service.delete_billing();
+            case 0 -> System.out.println("Returning to menu...");
+            default -> System.out.println("Invalid choice, try again.");
+        }
     }
 
     public static void choices(String doctorID) {
