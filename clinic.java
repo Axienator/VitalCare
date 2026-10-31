@@ -17,39 +17,33 @@ public class clinic {
             ==================================================
         %n: """);
 
-        choice = sc.nextInt();
-
-        switch (choice) {
-            case 1:
-                login.login_menu();
-                break;
-            case 2:
-                System.out.println("Staff");
-                break;
-            case 3:
-                System.out.println("Member");
-                break;
-            case 0:
-                System.out.println("Thank you for using the system!");
-            default:
-                System.out.println("Invalid Choice, try again");
+        if (sc.hasNextInt()) {
+            choice = sc.nextInt();
+            sc.nextLine();
+        } else {
+            System.out.println("Invalid input. Please enter a number.");
+            sc.close();
+            return;
         }
 
+        switch (choice) {
+            case 1 -> {
+                login.admin_login_menu();
+            }
+            case 2 -> {
+                login.staff_login_menu(args, sc);
+            }
+            case 3 -> {
+                login.member_login_menu();
+            }
+            case 0 -> {
+                System.out.println("Thank you for using the system!");
+            }
+            default -> {
+                System.out.println("Invalid Choice, try again");
+            }
+        }
 
-        
         sc.close();
-
     }
-
-    
 }
-
-// Patient Information
-// Patient ID
-// First name and last name
-// Patient Age
-// Sex
-// Contact number
-// Address
-// Emergency contact (Optional)
-// Date Regsitered
