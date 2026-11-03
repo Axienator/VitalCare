@@ -1,4 +1,3 @@
-
 package services;
 
 import java.io.*;
@@ -8,33 +7,38 @@ public class medical_service {
 
     static Scanner sc = new Scanner(System.in);
 
-    public static void add_medical() {
+    // Trim input and swap commas, which would break the comma-separated file
+    private static String clean(String text) {
+        return text.trim().replace(",", ";");
+    }
+
+    public static void addMedicalRecord() {
         try (BufferedWriter bw = new BufferedWriter(
                 new FileWriter("medical.txt", true))) {
 
             System.out.print("Record ID: ");
-            String recordID = sc.nextLine();
+            String recordID = clean(sc.nextLine());
 
             System.out.print("Patient ID: ");
-            String patientID = sc.nextLine();
+            String patientID = clean(sc.nextLine());
 
             System.out.print("Doctor ID: ");
-            String doctorID = sc.nextLine();
+            String doctorID = clean(sc.nextLine());
 
             System.out.print("Date (YYYY-MM-DD): ");
-            String date = sc.nextLine();
+            String date = clean(sc.nextLine());
 
             System.out.print("Diagnosis: ");
-            String diagnosis = sc.nextLine();
+            String diagnosis = clean(sc.nextLine());
 
             System.out.print("Treatment: ");
-            String treatment = sc.nextLine();
+            String treatment = clean(sc.nextLine());
 
             System.out.print("Prescription: ");
-            String prescription = sc.nextLine();
+            String prescription = clean(sc.nextLine());
 
             System.out.print("Notes: ");
-            String notes = sc.nextLine();
+            String notes = clean(sc.nextLine());
 
             bw.write(recordID + "," + patientID + "," + doctorID + "," + date + "," + diagnosis + "," + treatment + "," + prescription + "," + notes);
             bw.newLine();
@@ -46,7 +50,11 @@ public class medical_service {
         }
     }
 
-    public static void view_medical() {
+    public static void addMedicalRecord(Scanner scanner) {
+        addMedicalRecord();
+    }
+
+    public static void viewMedicalRecord() {
         try (BufferedReader br = new BufferedReader(
                 new FileReader("medical.txt"))) {
 
@@ -73,11 +81,11 @@ public class medical_service {
         }
     }
 
-    public static void edit_medical() {
+    public static void editMedicalRecord() {
         ArrayList<String> records = new ArrayList<>();
 
         System.out.print("Enter Record ID to edit: ");
-        String searchID = sc.nextLine();
+        String searchID = clean(sc.nextLine());
 
         boolean found = false;
 
@@ -95,25 +103,25 @@ public class medical_service {
                     found = true;
 
                     System.out.print("New Patient ID: ");
-                    record[1] = sc.nextLine();
+                    record[1] = clean(sc.nextLine());
 
                     System.out.print("New Doctor ID: ");
-                    record[2] = sc.nextLine();
+                    record[2] = clean(sc.nextLine());
 
                     System.out.print("New Date (YYYY-MM-DD): ");
-                    record[3] = sc.nextLine();
+                    record[3] = clean(sc.nextLine());
 
                     System.out.print("New Diagnosis: ");
-                    record[4] = sc.nextLine();
+                    record[4] = clean(sc.nextLine());
 
                     System.out.print("New Treatment: ");
-                    record[5] = sc.nextLine();
+                    record[5] = clean(sc.nextLine());
 
                     System.out.print("New Prescription: ");
-                    record[6] = sc.nextLine();
+                    record[6] = clean(sc.nextLine());
 
                     System.out.print("New Notes: ");
-                    record[7] = sc.nextLine();
+                    record[7] = clean(sc.nextLine());
 
                     line = String.join(",", record);
                 }
@@ -146,11 +154,15 @@ public class medical_service {
         }
     }
 
-    public static void delete_medical() {
+    public static void editMedicalRecord(Scanner scanner) {
+        editMedicalRecord();
+    }
+
+    public static void deleteMedicalRecord() {
         ArrayList<String> records = new ArrayList<>();
 
         System.out.print("Enter Record ID to delete: ");
-        String searchID = sc.nextLine();
+        String searchID = clean(sc.nextLine());
 
         boolean found = false;
 
@@ -193,5 +205,9 @@ public class medical_service {
         } catch (IOException e) {
             System.out.println("Error: " + e.getMessage());
         }
+    }
+
+    public static void deleteMedicalRecord(Scanner scanner) {
+        deleteMedicalRecord();
     }
 }
