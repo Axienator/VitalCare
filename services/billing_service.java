@@ -1,8 +1,8 @@
 
 package services;
 
-import java.util.*;
 import java.io.*;
+import java.util.*;
 
 public class billing_service {
 
@@ -27,7 +27,7 @@ public class billing_service {
             System.out.print("Payment Date (YYYY-MM-DD): ");
             String date = sc.nextLine();
 
-            bw.write(billingID + "," + patientID + "," + amount + ","
+            bw.write(billingID + "," + patientID + "," + money(amount) + ","
                     + status + "," + date);
             bw.newLine();
 
@@ -38,7 +38,27 @@ public class billing_service {
         }
     }
 
+    // Admin view: no member restriction
     public static void view_billing() {
+        view_billing("");
+    }
+
+    // Strip a leading "$" so amounts are always stored as "$250"
+    private static String money(String amount) {
+        String a = amount.trim();
+        return "$" + (a.startsWith("$") ? a.substring(1).trim() : a);
+    }
+
+    public static void view_billing(String memberID) {
+
+        System.out.print("Enter Appointment ID: ");
+        String appointmentID = sc.nextLine().trim();
+
+        System.out.print("Enter Patient ID: ");
+        String patientID = sc.nextLine().trim();
+
+        boolean found = false;
+
         try (BufferedReader br = new BufferedReader(
                 new FileReader("billing.txt"))) {
 
@@ -47,20 +67,33 @@ public class billing_service {
             while ((line = br.readLine()) != null) {
                 String[] bill = line.split(",", -1);
 
-                if (bill.length == 5) {
-                    System.out.println("\nBilling ID: " + bill[0]);
+                if (bill.length == 5
+                        && bill[0].trim().equalsIgnoreCase(appointmentID)
+                        && bill[1].trim().equalsIgnoreCase(patientID)
+                        && (memberID == null || memberID.isEmpty()
+                                || bill[1].trim().equalsIgnoreCase(memberID))) {
+
+                    System.out.println("\nAppointment ID: " + bill[0]);
                     System.out.println("Patient ID: " + bill[1]);
                     System.out.println("Amount: " + bill[2]);
                     System.out.println("Payment Status: " + bill[3]);
                     System.out.println("Payment Date: " + bill[4]);
                     System.out.println("------------------------------");
+
+                    found = true;
+                    break;
                 }
             }
 
+            if (!found) {
+                System.out.println("Appointment billing record not found.");
+            }
+
         } catch (IOException e) {
-            System.out.println("Error: " + e.getMessage());
+            System.out.println("Error reading billing.txt: " + e.getMessage());
         }
     }
+
 
     public static void edit_billing() {
         ArrayList<String> records = new ArrayList<>();
@@ -87,7 +120,7 @@ public class billing_service {
                     bill[1] = sc.nextLine();
 
                     System.out.print("New Amount: ");
-                    bill[2] = sc.nextLine();
+                    bill[2] = money(sc.nextLine());
 
                     System.out.print("New Payment Status (Paid/Unpaid): ");
                     bill[3] = sc.nextLine();
