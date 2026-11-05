@@ -1,15 +1,10 @@
+
 package roles;
 
-import java.util.*;
+import java.util.Scanner;
 import permissions.perms;
 
 public class staff {
-
-    public static void main(String[] args, String doctorID) {
-        try (Scanner sc = new Scanner(System.in)) {
-            main(args, doctorID, sc);
-        }
-    }
 
     public static void main(String[] args, String staffID, Scanner sc) {
         boolean running = true;
@@ -17,37 +12,38 @@ public class staff {
         while (running) {
             System.out.printf("""
                 ==================================================
-                        VitalClinic System - Staff Menu%n
+                        VitalCare System - Staff Menu%n
                     [1] Patient records
-                    [2] Doctor Management
-                    [3] Appointments
-                    [4] Medical Records
-                    [5] Billing and Payments
+                    [2] Appointments
+                    [3] Medical Records
                     [0] Exit%n
                 ==================================================
-                %n: """);
+                
+                Enter choice: """);
 
-            int choice = -1;
-            if (sc.hasNextInt()) {
-                choice = sc.nextInt();
-                sc.nextLine(); // Consume newline
-            } else {
-                sc.nextLine(); // Clear invalid input
+            if (!sc.hasNextLine()) {
+                return;
+            }
+
+            String input = sc.nextLine().trim();
+            int choice;
+
+            try {
+                choice = Integer.parseInt(input);
+            } catch (NumberFormatException e) {
                 System.out.println("Invalid input. Please enter a number.");
                 continue;
             }
 
             switch (choice) {
                 case 1 -> perms.patient_records();
-                case 2 -> perms.doctor_management();
-                case 3 -> perms.appointments(staffID);
-                case 4 -> perms.medical_records();
-                case 5 -> System.out.println("Billing and Payments is not available.");
+                case 2 -> perms.appointments(staffID);
+                case 3 -> perms.medical_records();
                 case 0 -> {
                     System.out.println("Thank you for using the system!");
                     running = false;
                 }
-                default -> System.out.println("Invalid Choice, try again");
+                default -> System.out.println("Invalid choice, try again.");
             }
         }
     }
