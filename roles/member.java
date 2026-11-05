@@ -8,18 +8,18 @@ public class member {
 
     public static void main(String[] args, String memberID) {
         int choice;
-        
+
         try (Scanner sc = new Scanner(System.in)) {
             while (true) {
                 System.out.printf("""
                     ==================================================
-                            VitalClinic System - Member Menu%n
+                            VitalCare System - Member Menu%n
                         [1] Patient Records
                         [2] Appointments
                         [3] Billing and Payments
                         [0] Exit%n
                     ==================================================
-                %nEnter choice: """);
+                %nEnter choice:\s""");
 
                 if (sc.hasNextInt()) {
                     choice = sc.nextInt();
@@ -33,11 +33,11 @@ public class member {
                 switch (choice) {
                     case 1 -> {
                         System.out.println("=== Patient Records ===");
-                        patient_service.view_patient();
+                        patient_service.view_patient(memberID);
                     }
                     case 2 -> {
                         System.out.println("=== Appointments ===");
-                        appointment_service.view_appointment("");
+                        appointment_service.view_appointment("", memberID);
                     }
                     case 3 -> {
                         System.out.println("=== Billing and Payments ===");
