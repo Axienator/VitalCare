@@ -37,7 +37,13 @@ public class patient_service {
         }
     }
 
+    // Admin/staff view: all patients
     public static void view_patient() {
+        view_patient("");
+    }
+
+    // Member view: only the given patient ID (empty = everyone)
+    public static void view_patient(String patientID) {
         try (BufferedReader br = new BufferedReader(new FileReader("patient.txt"))) {
             String line;
             boolean found = false;
@@ -45,7 +51,9 @@ public class patient_service {
             while ((line = br.readLine()) != null) {
                 String[] patient = line.split(",", -1);
 
-                if (patient.length == 4) {
+                if (patient.length == 4
+                        && (patientID == null || patientID.isEmpty()
+                                || patient[0].trim().equalsIgnoreCase(patientID))) {
                     System.out.println("\nPatient ID: " + patient[0]);
                     System.out.println("Patient Name: " + patient[1]);
                     System.out.println("Illness: " + patient[2]);
