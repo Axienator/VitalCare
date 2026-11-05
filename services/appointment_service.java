@@ -38,7 +38,7 @@ public class appointment_service {
         System.out.print("Enter Appointment Date (YYYY-MM-DD): ");
         String date = sc.nextLine().trim();
 
-        System.out.print("Enter Appointment Time (HH:MM): ");
+        System.out.print("Enter Appointment Time : ");
         String time = sc.nextLine().trim();
 
         System.out.print("Enter Appointment Reason: ");
@@ -71,7 +71,10 @@ public class appointment_service {
     public static void view_appointment(String doctorID) {
         System.out.print("Enter Patient ID: ");
         String patientID = sc.nextLine().trim();
+        view_appointment(doctorID, patientID);
+    }
 
+    public static void view_appointment(String doctorID, String patientID) {
         boolean found = false;
 
         try (BufferedReader br = new BufferedReader(new FileReader("appointment.txt"))) {
@@ -130,7 +133,7 @@ public class appointment_service {
                     System.out.print("Enter new Appointment Date (YYYY-MM-DD): ");
                     String date = sc.nextLine().trim();
 
-                    System.out.print("Enter new Appointment Time (HH:MM): ");
+                    System.out.print("Enter new Appointment Time: ");
                     String time = sc.nextLine().trim();
 
                     System.out.print("Enter new Appointment Reason: ");
