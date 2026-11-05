@@ -9,84 +9,66 @@ import roles.staff;
 public class login {
 
     // Admin Login Menu
-    public static void admin_login_menu ()
-    {
-        try (Scanner sc = new Scanner(System.in)) {
-        while(true){
-            // Fresh list each attempt so credentials are not duplicated
-            ArrayList<String> credential = new ArrayList<>();
 
-            try (BufferedReader br = new BufferedReader(new FileReader("admin.txt"))) {
+public static void admin_login_menu(Scanner sc) {
 
-            System.out.printf("""
-            ==================================================
-                            VitalClinic System%n
-                Username:%n
-                Password:%n
-            ================================================== %n%nUsername:
-            """);
+    while (true) {
+        ArrayList<String> credential = new ArrayList<>();
 
-            String line = br.readLine();
+        try (BufferedReader br = new BufferedReader(
+                new FileReader("admin_credentials.txt"))) {
 
-            while (line != null) {
+            String line;
+
+            while ((line = br.readLine()) != null) {
                 credential.add(line);
-                line = br.readLine();
             }
 
-            String user = sc.nextLine();
+        } catch (IOException e) {
+            System.out.println("Unable to read admin credentials: " + e.getMessage());
+            return;
+        }
 
-            System.out.printf("""
-            %n==================================================
-                            VitalClinic System%n
-                Username: %s%n
-                Password:%n
-            ================================================== %n%nPassword:
-            """, user);
+        System.out.println("\n===== VitalCare System - Admin Login =====");
 
-            String password = sc.nextLine();
-            boolean loginSuccessful = false;
+        System.out.print("Username: ");
+        if (!sc.hasNextLine()) {
+            return;
+        }
+        String user = sc.nextLine().trim();
 
-            for(int i = 0; i < credential.size(); i++){
-                String[] cred = credential.get(i).split(",", -1);
+        System.out.print("Password: ");
+        if (!sc.hasNextLine()) {
+            return;
+        }
+        String password = sc.nextLine();
 
-                if(cred.length >= 2 && cred[0].trim().equalsIgnoreCase(user) && cred[1].trim().equals(password)){
-                    System.out.printf("""
-                                %n==================================================
-                                                VitalClinic System
+        boolean loginSuccessful = false;
 
-                                                Login Successful%n
-                                                Welcome %s!
+        for (String line : credential) {
+            String[] cred = line.split(",", -1);
 
-                                ==================================================%n%n%n%n%n
-                                """, user);
-                    loginSuccessful = true;
-                    perms.choices("");
-                    break;
-                }
-            }
+            if (cred.length >= 2
+                    && cred[0].trim().equalsIgnoreCase(user)
+                    && cred[1].trim().equals(password)) {
 
-            if (loginSuccessful) {
+                loginSuccessful = true;
                 break;
-            } else {
-                System.out.printf("""
-                            %n==================================================
-                                            VitalClinic System
-
-                                            Login Failed!%n
-                                     Wrong password or Username
-
-                            ==================================================%n%n%n%n%n
-                            """);
             }
-        } catch (Exception e) {
-            System.out.println(
-                "An error occurred: " + e.getMessage()
-            );
-            break;
         }
+
+        if (loginSuccessful) {
+            System.out.println("\nLogin Successful!");
+            System.out.println("Welcome " + user + "!");
+
+            perms.choices("");
+            return;
         }
-        }
+
+        System.out.println("\nLogin Failed! Wrong username or password.");
     }
+}
+
 
     // Staff Login Menu
     public static void staff_login_menu(String[] args, Scanner sc) {
@@ -107,7 +89,7 @@ public class login {
         while (true) {
             System.out.printf("""
                     ==================================================
-                            VitalClinic System - Staff%n
+                            VitalCare System - Staff%n
                     ==================================================%n
                     Username:\s""");
             if (!sc.hasNextLine()) {
@@ -146,63 +128,68 @@ public class login {
     }
 
     // Member Login Menu
-    public static void member_login_menu() {
-        try (Scanner sc = new Scanner(System.in)) {
-            while (true) {
-                ArrayList<String> credential = new ArrayList<>();
 
-                try (BufferedReader br = new BufferedReader(
-                        new FileReader("member_credentials.txt"))) {
+    public static void member_login_menu(Scanner sc) {
 
-                    System.out.print("Username: ");
-                    String user = sc.nextLine();
+        while (true) {
+            ArrayList<String> credential = new ArrayList<>();
 
-                    System.out.print("Password: ");
-                    String password = sc.nextLine();
+            try (BufferedReader br = new BufferedReader(
+                    new FileReader("member_credentials.txt"))) {
 
-                    String line = br.readLine();
+                String line;
 
-                    while (line != null) {
-                        credential.add(line);
-                        line = br.readLine();
-                    }
+                while ((line = br.readLine()) != null) {
+                    credential.add(line);
+                }
 
-                    boolean loginSuccessful = false;
+            } catch (IOException e) {
+                System.out.println("Unable to read member credentials: " + e.getMessage());
+                return;
+            }
 
-                    for (int i = 0; i < credential.size(); i++) {
-                        String[] cred = credential.get(i).split(",", -1);
+            System.out.println("\n===== VitalCare System - Member Login =====");
 
-                        if (cred.length >= 3
-                                && cred[0].trim().equalsIgnoreCase(user)
-                                && cred[1].trim().equals(password)) {
+            System.out.print("Username: ");
+            if (!sc.hasNextLine()) {
+                return;
+            }
+            String user = sc.nextLine().trim();
 
-                            String memberID = cred[2].trim();
+            System.out.print("Password: ");
+            if (!sc.hasNextLine()) {
+                return;
+            }
+            String password = sc.nextLine();
 
-                            System.out.println("\nLogin Successful!");
-                            System.out.println("Welcome Member " + user + "!");
+            String memberID = null;
 
-                            System.out.println("Member ID: " + memberID);
+            for (String line : credential) {
+                String[] cred = line.split(",", -1);
 
-                            loginSuccessful = true;
-                            member.main(new String[]{}, memberID);
-                            break;
-                        }
-                    }
+                if (cred.length >= 3
+                        && cred[0].trim().equalsIgnoreCase(user)
+                        && cred[1].trim().equals(password)) {
 
-                    if (loginSuccessful) {
-                        break;
-                    } else {
-                        System.out.println("\nLogin Failed!");
-                        System.out.println("Wrong password or username.");
-                    }
-
-                } catch (Exception e) {
-                    System.out.println("An error occurred: " + e.getMessage());
+                    memberID = cred[2].trim();
                     break;
                 }
             }
+
+            if (memberID != null && !memberID.isEmpty()) {
+                System.out.println("\nLogin Successful!");
+                System.out.println("Welcome Member " + user + "!");
+                System.out.println("Member ID: " + memberID);
+
+                member.main(new String[]{}, memberID);
+                return;
+            }
+
+            System.out.println("\nLogin Failed!");
+            System.out.println("Wrong password or username.");
         }
     }
+
 
     // Checks if a value is already in a column of a file (0 = first column)
     private static boolean value_exists(String file, int column, String value) {
@@ -275,7 +262,7 @@ public class login {
             }
             String password = sc.nextLine();
 
-            try (BufferedReader br = new BufferedReader(new FileReader("admin.txt"))) {
+            try (BufferedReader br = new BufferedReader(new FileReader("admin_credentials.txt"))) {
                 String line;
 
                 while ((line = br.readLine()) != null) {
